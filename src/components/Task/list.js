@@ -27,10 +27,17 @@ class List extends Component {
     }
 
     renderTasks = (tasks) => {
+
+        const { updateTask } = this.props;
+
         if (tasks && tasks.length > 0) {
             return tasks.map((task, index) => (
-                <Item task={task} key={task.id} index = {index + 1 } />)
-            )
+                <Item
+                    updateTask={updateTask}
+                    task={task} key={task.id}
+                    index={index + 1}
+                />
+            ))
         }
         return null;
     }    

@@ -2,5 +2,6 @@ module.exports = {
     LIST_ALL_TASK: 'LIST_ALL_TASK',
     OPEN_FORM: 'OPEN_FORM',
     CLOSE_FORM: 'CLOSE_FORM',
-    ADD_TASK: 'ADD_TASK'
+    ADD_TASK: 'ADD_TASK',
+    UPDATE_TASK: 'UPDATE_TASK'
 }

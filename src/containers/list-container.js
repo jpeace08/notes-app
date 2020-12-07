@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import List from '../components/Task/list';
 import { connect } from 'react-redux';
 
+const { updateTask } = require('../actions/task-action');
+
 class ListContainer extends Component {
 
     render() {
 
-        const { tasks } = this.props;
+        const { tasks, updateTask } = this.props;
 
         return (
-            <List tasks={ tasks }/>
+            <List updateTask={updateTask} tasks={ tasks }/>
         );
     }
 }
@@ -21,4 +23,12 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps)(ListContainer);
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        updateTask: (task) => {
+            return dispatch(updateTask(task))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListContainer);

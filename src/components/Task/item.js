@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Dropdown, Checkbox } from 'semantic-ui-react';
+import { Table, Dropdown, Checkbox, Button } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 const { status } = require('../../constants/status-options');
 
@@ -12,9 +12,30 @@ const statusOptions = [...status].map((st, index) => ({
 
 class Item extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
 
-    handleChange = (event, { name, value }) => {
-        console.log(value);
+        }
+    }
+    
+
+
+    handleChange = (event, {name, value, checked}) => {
+        const { task, updateTask } = this.props;
+
+        const tmpTask = {
+            id: task.id,
+            name: task.name,
+            status: name === 'status' ? value : task.status,
+            from: name === 'timeFrom' ? value : task.from,
+            to: name === 'timeTo' ? value : task.to,
+            isNotify: checked!==undefined ? checked : task.isNotify
+        }
+
+        console.log(JSON.stringify(tmpTask));
+
+        updateTask(tmpTask);
     }
 
     defaultDate = () => {
@@ -36,9 +57,11 @@ class Item extends Component {
                 <Table.Cell> { task.name } </Table.Cell>
                 <Table.Cell textAlign='center'>
                     <Dropdown
-                        placeholder='State'
+                        placeholder='Status'
                         selection
+                        name='status'
                         value={task.status.toString()}
+                        onChange = {this.handleChange}
                         options={statusOptions}
                     />
                 </Table.Cell>
@@ -59,10 +82,19 @@ class Item extends Component {
                     />
                 </Table.Cell>
                 <Table.Cell textAlign='center'>
-                    <Checkbox toggle checked={task.isNotify} />
+                    <Checkbox
+                        toggle
+                        name='isNotify'
+                        checked={task.isNotify}
+                        onChange={this.handleChange}
+                    />
                 </Table.Cell>
                 <Table.Cell textAlign='center'>
-                    
+                    <Button.Group>
+                        <Button color='orange'>Remove</Button>
+                        <Button.Or />
+                        <Button color='green'>Edit</Button>
+                    </Button.Group>
                 </Table.Cell>
             </Table.Row>
         );

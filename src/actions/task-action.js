@@ -1,4 +1,4 @@
-const { LIST_ALL_TASK, ADD_TASK } = require('../constants/action-types');
+const { LIST_ALL_TASK, ADD_TASK, UPDATE_TASK } = require('../constants/action-types');
 const { WELCOME } = require('../constants/message');
 
 module.exports = {
@@ -8,6 +8,10 @@ module.exports = {
     }),
     addTask: (task) => ({
         type: ADD_TASK,
+        task
+    }),
+    updateTask: (task) => ({
+        type: UPDATE_TASK,
         task
     })
 }

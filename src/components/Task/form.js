@@ -102,16 +102,18 @@ class FormInput extends React.Component {
                         // onChange = {this.handleChange}
                     />
                 </Form.Field>
-                <Button
-                    name='add-button'
-                    color='green'
-                    onClick={this.handleClick}
-                >Submit</Button>
-                <Button
-                    name='close-button'
-                    color='red'
-                    onClick={this.handleClick}
-                >Close</Button>
+                <Button.Group>
+                    <Button
+                        name='add-button'
+                        color='green'
+                        onClick={this.handleClick}
+                    >Save</Button>
+                    <Button
+                        name='close-button'
+                        color='red'
+                        onClick={this.handleClick}
+                    >Close</Button>
+                </Button.Group>
             </Form>
         </div>
     )
@@ -122,7 +124,6 @@ class FormInput extends React.Component {
         if (isDisplay) {
             return this.renderForm();
         }
-
         return'';
     }
 }
