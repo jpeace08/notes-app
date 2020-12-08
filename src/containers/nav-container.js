@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Nav from '../components/layouts/menus/nav';
-const { closeForm, openForm } = require('../actions/form-action');
+const { openForm } = require('../actions/form-action');
 
 class NavContainer extends Component {
     render() {

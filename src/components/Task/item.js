@@ -9,6 +9,9 @@ const statusOptions = [...status].map((st, index) => ({
     value: st.value
 }));
 
+// Item.prototype = {
+
+// }
 
 class Item extends Component {
 
@@ -19,9 +22,11 @@ class Item extends Component {
         }
     }
     
-    handleClick = () => {
-        const { openForm, task } = this.props;
-        openForm(task);
+
+    handleClick = ({target: {name}}) => {
+        const { openForm, task, deleteTask } = this.props;
+        if (name === 'remove-button') { deleteTask(task) }
+        else openForm(task);
     }
 
     handleChange = (event, {name, value, checked}) => {
@@ -94,9 +99,13 @@ class Item extends Component {
                 </Table.Cell>
                 <Table.Cell textAlign='center'>
                     <Button.Group>
-                        <Button color='orange'>Remove</Button>
+                        <Button
+                            name = 'remove-button'
+                            onClick={ this.handleClick }
+                            color='orange'>Remove</Button>
                         <Button.Or />
                         <Button
+                            name='edit-button'
                             onClick = {this.handleClick}
                             color='green'>Edit</Button>
                     </Button.Group>

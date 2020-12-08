@@ -3,16 +3,16 @@ import List from '../components/Task/list';
 import { connect } from 'react-redux';
 import { openForm } from '../actions/form-action';
 
-const { updateTask } = require('../actions/task-action');
+const { updateTask, deleteTask } = require('../actions/task-action');
 
 class ListContainer extends Component {
 
     render() {
 
-        const { taskReducer, formReducer, updateTask, openForm } = this.props;
+        const { taskReducer, deleteTask, updateTask, openForm } = this.props;
 
         return (
-            <List updateTask={updateTask} tasks={[...taskReducer]} openForm={ openForm }/>
+            <List updateTask={updateTask} tasks={[...taskReducer]} openForm={openForm} deleteTask={ deleteTask }/>
         );
     }
 }
@@ -31,7 +31,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         openForm: (task) => {
             return dispatch(openForm(task))
-        }
+        },
+        deleteTask: (task) => dispatch(deleteTask(task)),
     }
 }
 

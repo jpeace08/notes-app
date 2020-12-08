@@ -23,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         saveTask: (task) => dispatch(saveTask(task)),
-        closeForm: () => dispatch(closeForm())
+        closeForm: () => dispatch(closeForm()),
     }
 }
 

@@ -32,8 +32,6 @@ class FormInput extends React.Component {
             return;
         }
 
-        console.log(name, value);
-
         this.setState({
             [name]: value
         })
@@ -61,27 +59,16 @@ class FormInput extends React.Component {
                 ...this.state
             });
 
-            this.setState({
-                id: null,
-                name: null,
-                status: null,
-                from: null,
-                to: null,
-                isNotify: null
-            });
-            
-        }
-        else {
-            this.setState({
-                id: null,
-                name: null,
-                status: null,
-                from: null,
-                to: null,
-                isNotify: null
-            });
         }
 
+        this.setState({
+            id: null,
+            name: null,
+            status: '0',
+            from: this.getDefaultStateDateTime(),
+            to: this.getDefaultStateDateTime(),
+            isNotify: null
+        });        
 
         closeForm();
 

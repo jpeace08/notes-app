@@ -29,7 +29,7 @@ class List extends Component {
 
     renderTasks = (tasks) => {
 
-        const { updateTask, openForm } = this.props;
+        const { updateTask, openForm, deleteTask } = this.props;
 
         if (tasks && tasks.length > 0) {
             return tasks.map((task, index) => (
@@ -38,6 +38,7 @@ class List extends Component {
                     updateTask={updateTask}
                     task={task} key={task.id}
                     index={index + 1}
+                    deleteTask={ deleteTask }
                 />
             ))
         }
