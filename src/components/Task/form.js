@@ -16,9 +16,9 @@ class FormInput extends React.Component {
         this.state = {
             id: null,
             name: null,
-            status: null,
-            from: null,
-            to: null,
+            status: '0',
+            from: this.getDefaultStateDateTime(),
+            to: this.getDefaultStateDateTime(),
             isNotify: null
         }
     }
@@ -53,7 +53,7 @@ class FormInput extends React.Component {
 
     handleClick = (e) => {
 
-        const { stateForm:{ task }, saveTask, closeForm } = this.props;
+        const { saveTask, closeForm } = this.props;
 
         if (e.target.name === 'save-button') {
             
@@ -71,6 +71,16 @@ class FormInput extends React.Component {
             });
             
         }
+        else {
+            this.setState({
+                id: null,
+                name: null,
+                status: null,
+                from: null,
+                to: null,
+                isNotify: null
+            });
+        }
 
 
         closeForm();
@@ -79,12 +89,7 @@ class FormInput extends React.Component {
 
     getDefaultStateDateTime = () => {
         const date = new Date();
-        return ({ date: date.getDate(),
-            month: date.getMonth(),
-            year: date.getFullYear(),
-            hour: date.getHours(),
-            minute: date.getMinutes(),
-        });
+        return (`${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
     }
 
     renderForm = ({id, name, status, from, to, isNotify}) => (

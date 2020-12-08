@@ -14,10 +14,12 @@ module.exports.taskReducer = (state = initialSate, action) => {
         
         case SAVE_TASK:
             if (action.task.id === undefined || action.task.id == null) {
+
                 tasks.unshift({
+                    ...action.task,
                     id: generateId(),
-                    ...action.task
                 });
+
             }
             else {
                 task = tasks.find(item => item.id === action.task.id);
