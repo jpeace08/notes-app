@@ -6,6 +6,7 @@ class List extends Component {
 
 
     render() {
+
         const { tasks } = this.props;
 
         return (
@@ -28,11 +29,12 @@ class List extends Component {
 
     renderTasks = (tasks) => {
 
-        const { updateTask } = this.props;
+        const { updateTask, openForm } = this.props;
 
         if (tasks && tasks.length > 0) {
             return tasks.map((task, index) => (
                 <Item
+                    openForm={openForm}
                     updateTask={updateTask}
                     task={task} key={task.id}
                     index={index + 1}

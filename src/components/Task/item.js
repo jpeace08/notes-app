@@ -19,7 +19,10 @@ class Item extends Component {
         }
     }
     
-
+    handleClick = () => {
+        const { openForm, task } = this.props;
+        openForm(task);
+    }
 
     handleChange = (event, {name, value, checked}) => {
         const { task, updateTask } = this.props;
@@ -93,7 +96,9 @@ class Item extends Component {
                     <Button.Group>
                         <Button color='orange'>Remove</Button>
                         <Button.Or />
-                        <Button color='green'>Edit</Button>
+                        <Button
+                            onClick = {this.handleClick}
+                            color='green'>Edit</Button>
                     </Button.Group>
                 </Table.Cell>
             </Table.Row>

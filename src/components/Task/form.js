@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button, Checkbox, Form, Dropdown } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Dropdown, Input, Label } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 const { status } = require('../../constants/status-options');
 
-const statusOptions = [...status].map((st, index) => ({
+const statusOptions = [...status].map(st => ({
     key: st.key,
     text: st.text,
     value: st.value
@@ -13,6 +13,14 @@ class FormInput extends React.Component {
 
     constructor (props) {
         super(props);
+        // this.state = {
+        //     id: null,
+        //     name: null,
+        //     status: null,
+        //     from: null,
+        //     to: null,
+        //     isDisplay: false
+        // }
         this.jobNameRef = React.createRef();
         this.jobStatusRef = React.createRef();
         this.timeFromRef = React.createRef();
@@ -20,23 +28,38 @@ class FormInput extends React.Component {
         this.notifyRef = React.createRef();
     }
 
+    handleChange = (e, { name, value }) => {
+        // this.setState(state => {
+        //     return {
+        //         [name]: value
+        //     }
+        // })
+    }           
+
+    static getDerivedStateFromProps = (props, state) => {
+        const { stateForm: { task } } = props;
+        return {
+            ...task || null
+        }
+    }
 
     handleClick = (e) => {
 
-        const { addTask, closeForm } = this.props;
+        const { stateForm:{ task }, saveTask, closeForm } = this.props;
 
-        if (e.target.name === 'add-button') {
-            addTask({
+        if (e.target.name === 'save-button') {
+            console.log(this.jobNameRef.current.value);
+            saveTask({
+                id: task === undefined ? null : task.id,
                 name: this.jobNameRef.current.value,
                 status: this.jobStatusRef.current.state.selectedIndex,
                 from: this.timeFromRef.current.props.value,
                 to: this.timeToRef.current.props.value,
                 isNotify: this.notifyRef.current.state.checked
             });
+            
         }
-        else if (e.target.name === 'close-button') {
-            closeForm();
-        }
+        closeForm();
 
     }
 
@@ -50,61 +73,68 @@ class FormInput extends React.Component {
         });
     }
 
-    renderForm = () => (
-
+    renderForm = ({id, name, status, from, to, isNotify}) => (
+        
         <div className="form-input">
             <Form>
                 <Form.Field>
-                    <label>Your job</label>
-                    <input
-                        name='jobName'
+                    <Label className='mb-2'>Job name</Label>
+                    <Input
+                        value={name}
+                        name='name'
                         placeholder='Enter your job...'
                         ref={this.jobNameRef}
+                        onChange={this.handleChange}
+                    />
 
-                    />
                 </Form.Field>
                 <Form.Field>
-                    <label>Status</label>
+                    <Label className='mb-2'>Status</Label>
                     <Dropdown
-                        placeholder='State'
+                        placeholder='Status'
                         selection
-                        options={statusOptions}
+                        search
+                        name='status'
+                        value={status}  
+                        options={statusOptions} 
                         ref={this.jobStatusRef}
+                        onChange={this.handleChange}
                     />
                 </Form.Field>
                 <Form.Field>
-                    <label>From</label>
+                    <Label className='mb-2'>From</Label>
                     <DateTimeInput
-                        name="timeFrom"
+                        name="from"
                         placeholder="From"
-                        // value={}
+                        value={from}
                         iconPosition="left"
                         ref={this.timeFromRef}
-                        // onChange={this.handleChange}
+                        onChange={this.handleChange}
                     />
                 </Form.Field>
                 <Form.Field>
-                    <label>To</label>
+                    <Label className='mb-2'>To</Label>
                     <DateTimeInput
-                        name="timeTo"
+                        name="to"
                         placeholder="To"
-                        // value={}
+                        value={to}
                         iconPosition="left"
                         ref={this.timeToRef}
-                        // onChange={this.handleChange}
+                        onChange={this.handleChange}
                     />
                 </Form.Field>
                 <Form.Field>
                     <Checkbox
+                        checked={isNotify}
                         name='isNotify'
                         label='Notification'
                         ref={this.notifyRef}
-                        // onChange = {this.handleChange}
+                        onChange={this.handleChange}
                     />
                 </Form.Field>
                 <Button.Group>
                     <Button
-                        name='add-button'
+                        name='save-button'
                         color='green'
                         onClick={this.handleClick}
                     >Save</Button>
@@ -119,10 +149,10 @@ class FormInput extends React.Component {
     )
 
     render() {
-        const { isDisplay } = this.props.isDisplay;
-
+            const { stateForm: { isDisplay } } = this.props;
+        
         if (isDisplay) {
-            return this.renderForm();
+            return this.renderForm(this.state);
         }
         return'';
     }

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import FormInput from '../components/Task/form';
 import { connect } from 'react-redux';
-const { addTask } = require('../actions/task-action');
+const { saveTask } = require('../actions/task-action');
 const { closeForm } = require('../actions/form-action');
 
 class FormContainer extends Component {
     render() {
-        const { isDisplay: { ...isDisplay }, addTask, closeForm } = this.props;
+        const { stateForm , saveTask, closeForm } = this.props;
         return (
-            <FormInput closeForm={closeForm} addTask={addTask} isDisplay={ isDisplay }/>
+            <FormInput closeForm={closeForm} saveTask={saveTask} stateForm={ stateForm }/>
         );
     }
 }
@@ -16,13 +16,13 @@ class FormContainer extends Component {
 const mapStateToProps = (state, ownProps) => {
     const { formReducer } = state;
     return {
-        isDisplay: formReducer
+        stateForm: {...formReducer}
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        addTask: (task) => dispatch(addTask(task)),
+        saveTask: (task) => dispatch(saveTask(task)),
         closeForm: () => dispatch(closeForm())
     }
 }

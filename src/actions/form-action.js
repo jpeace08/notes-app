@@ -5,7 +5,8 @@ module.exports = {
     closeForm: () => ({
         type: CLOSE_FORM,
     }),
-    openForm: () => ({
+    openForm: (task) => ({
         type: OPEN_FORM,
+        task
     })
 }
