@@ -13,33 +13,41 @@ class FormInput extends React.Component {
 
     constructor (props) {
         super(props);
-        // this.state = {
-        //     id: null,
-        //     name: null,
-        //     status: null,
-        //     from: null,
-        //     to: null,
-        //     isDisplay: false
-        // }
-        this.jobNameRef = React.createRef();
-        this.jobStatusRef = React.createRef();
-        this.timeFromRef = React.createRef();
-        this.timeToRef = React.createRef();
-        this.notifyRef = React.createRef();
+        this.state = {
+            id: null,
+            name: null,
+            status: null,
+            from: null,
+            to: null,
+            isNotify: null
+        }
     }
 
-    handleChange = (e, { name, value }) => {
-        // this.setState(state => {
-        //     return {
-        //         [name]: value
-        //     }
-        // })
+    handleChange = (e, { name, value, checked }) => {
+        
+        if (checked !== undefined) {
+            this.setState({
+                [name] : checked
+            })
+            return;
+        }
+
+        console.log(name, value);
+
+        this.setState({
+            [name]: value
+        })
+
     }           
 
     static getDerivedStateFromProps = (props, state) => {
+
         const { stateForm: { task } } = props;
-        return {
-            ...task || null
+
+        if (state.id === null) {
+            return {
+                ...task || null
+            }
         }
     }
 
@@ -48,17 +56,23 @@ class FormInput extends React.Component {
         const { stateForm:{ task }, saveTask, closeForm } = this.props;
 
         if (e.target.name === 'save-button') {
-            console.log(this.jobNameRef.current.value);
+            
             saveTask({
-                id: task === undefined ? null : task.id,
-                name: this.jobNameRef.current.value,
-                status: this.jobStatusRef.current.state.selectedIndex,
-                from: this.timeFromRef.current.props.value,
-                to: this.timeToRef.current.props.value,
-                isNotify: this.notifyRef.current.state.checked
+                ...this.state
+            });
+
+            this.setState({
+                id: null,
+                name: null,
+                status: null,
+                from: null,
+                to: null,
+                isNotify: null
             });
             
         }
+
+
         closeForm();
 
     }
@@ -83,7 +97,6 @@ class FormInput extends React.Component {
                         value={name}
                         name='name'
                         placeholder='Enter your job...'
-                        ref={this.jobNameRef}
                         onChange={this.handleChange}
                     />
 
@@ -93,12 +106,10 @@ class FormInput extends React.Component {
                     <Dropdown
                         placeholder='Status'
                         selection
-                        search
                         name='status'
+                        onChange={this.handleChange}
                         value={status}  
                         options={statusOptions} 
-                        ref={this.jobStatusRef}
-                        onChange={this.handleChange}
                     />
                 </Form.Field>
                 <Form.Field>
@@ -108,7 +119,6 @@ class FormInput extends React.Component {
                         placeholder="From"
                         value={from}
                         iconPosition="left"
-                        ref={this.timeFromRef}
                         onChange={this.handleChange}
                     />
                 </Form.Field>
@@ -119,7 +129,6 @@ class FormInput extends React.Component {
                         placeholder="To"
                         value={to}
                         iconPosition="left"
-                        ref={this.timeToRef}
                         onChange={this.handleChange}
                     />
                 </Form.Field>
@@ -128,7 +137,6 @@ class FormInput extends React.Component {
                         checked={isNotify}
                         name='isNotify'
                         label='Notification'
-                        ref={this.notifyRef}
                         onChange={this.handleChange}
                     />
                 </Form.Field>
@@ -149,7 +157,7 @@ class FormInput extends React.Component {
     )
 
     render() {
-            const { stateForm: { isDisplay } } = this.props;
+        const { stateForm: { isDisplay } } = this.props;
         
         if (isDisplay) {
             return this.renderForm(this.state);
