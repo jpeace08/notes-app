@@ -41,8 +41,6 @@ class Item extends Component {
             isNotify: checked!==undefined ? checked : task.isNotify
         }
 
-        console.log(JSON.stringify(tmpTask));
-
         updateTask(tmpTask);
     }
 

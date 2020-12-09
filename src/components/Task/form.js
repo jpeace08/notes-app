@@ -15,11 +15,11 @@ class FormInput extends React.Component {
         super(props);
         this.state = {
             id: null,
-            name: null,
+            name: '',
             status: '0',
             from: this.getDefaultStateDateTime(),
             to: this.getDefaultStateDateTime(),
-            isNotify: null
+            isNotify: false
         }
     }
 
@@ -63,11 +63,11 @@ class FormInput extends React.Component {
 
         this.setState({
             id: null,
-            name: null,
+            name: '',
             status: '0',
             from: this.getDefaultStateDateTime(),
             to: this.getDefaultStateDateTime(),
-            isNotify: null
+            isNotify: false
         });        
 
         closeForm();

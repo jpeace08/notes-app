@@ -10,12 +10,33 @@ const statusOptions = [...status].map((st, index) => ({
 
 export default class Nav extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            status: null,
+        }
+    }
+    
+
     handleClick = (e) => {
         this.props.onOpenForm();
     }
 
+    handleSearchInput = (e, {name, value}) => {
+        const { handleSearch } = this.props;
+
+        this.setState({
+            [name] : value
+        });
+
+        handleSearch(this.state);
+    }
+
     render() {
+
         return (
+
             <Menu stackable size='small'>
                 <Menu.Item>
                     <img src=''alt='Notes App' />
@@ -25,13 +46,15 @@ export default class Nav extends Component {
                 />
 
                 <Menu.Item>
-                    <Input className='icon' icon='search' placeholder='Search...' />
+                    <Input className='icon' name='name' icon='search' placeholder='Search...' onChange = {this.handleSearchInput} />
                 </Menu.Item>
 
                 <Menu.Item>
                     <Dropdown
+                        name='status'
                         placeholder='Filter'
                         selection
+                        onChange = {this.handleSearchInput}
                         options={statusOptions}
                     />
                 </Menu.Item>
